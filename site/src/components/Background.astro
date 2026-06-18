@@ -1,0 +1,78 @@
+---
+import SectionHeading from "./ui/SectionHeading.astro";
+import type { Locale } from "../i18n";
+import { getPageContent } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { background } = getPageContent(locale);
+---
+
+<section id="background" class="section-pad border-b border-primary/10 bg-surface">
+  <div class="container-page">
+    <SectionHeading title={background.title} subtitle={background.subtitle} />
+
+    <div class="grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-14">
+      <div>
+        <h3 class="mb-6 text-sm font-semibold tracking-wide text-accent uppercase">
+          {background.timelineLabel}
+        </h3>
+        <ol class="relative space-y-0 border-l-2 border-primary/15 pl-6">
+          {
+            background.timeline.map((entry) => (
+              <li
+                class:list={[
+                  "relative pb-8 last:pb-0",
+                  "muted" in entry && entry.muted && "opacity-70",
+                ]}
+              >
+                <span
+                  class="absolute -left-[1.6rem] top-1.5 h-3 w-3 rounded-full border-2 border-surface bg-accent"
+                  aria-hidden="true"
+                />
+                <p class="text-sm font-semibold text-accent">{entry.period}</p>
+                <p class="mt-1 font-serif text-lg font-semibold text-primary">
+                  {entry.org}
+                </p>
+                <p class="mt-1 text-sm leading-relaxed text-text-muted md:text-base">
+                  {entry.detail}
+                </p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+
+      <div class="space-y-8">
+        <div>
+          <h3 class="mb-4 text-sm font-semibold tracking-wide text-accent uppercase">
+            {background.educationLabel}
+          </h3>
+          <ul class="space-y-3">
+            {
+              background.education.map((item) => (
+                <li class="rounded-lg border border-primary/10 bg-background px-4 py-3 text-sm leading-relaxed text-text md:text-base">
+                  {item}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="mb-4 text-sm font-semibold tracking-wide text-accent uppercase">
+            {background.certificationsLabel}
+          </h3>
+          <p
+            class="rounded-lg border border-primary/10 bg-background px-4 py-3 text-sm leading-relaxed text-text md:text-base"
+          >
+            {background.certifications}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

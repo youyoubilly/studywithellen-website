@@ -1,0 +1,23 @@
+---
+import type { Locale } from "../i18n";
+import { getAlternateLocale, getLocalePath } from "../i18n";
+import { getPageContent } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { header } = getPageContent(locale);
+const alternate = getAlternateLocale(locale);
+const alternatePath = getLocalePath(alternate);
+---
+
+<a
+  href={alternatePath}
+  class="inline-flex min-h-[36px] min-w-[40px] shrink-0 items-center justify-center rounded-full border border-primary/15 px-2.5 text-[11px] font-semibold tracking-wide text-primary transition-colors hover:border-primary/30 hover:bg-primary/5 sm:min-w-[44px] sm:px-3 sm:text-xs md:min-h-[40px] md:px-4 md:text-sm"
+  hreflang={alternate === "zh" ? "zh-CN" : "en"}
+  aria-label={header.langSwitch.ariaLabel}
+>
+  {header.langSwitch.label}
+</a>

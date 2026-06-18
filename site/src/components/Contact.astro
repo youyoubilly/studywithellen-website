@@ -1,0 +1,125 @@
+---
+import SectionHeading from "./ui/SectionHeading.astro";
+import Button from "./ui/Button.astro";
+import Image from "./ui/Image.astro";
+import { hasWechatQr, IMAGES } from "../config/images";
+import { CONTACT, buildMailtoUrl } from "../config/site";
+import type { Locale } from "../i18n";
+import { getPageContent } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { contact, mailto } = getPageContent(locale);
+const showQr = hasWechatQr();
+---
+
+<section id="contact" class="section-pad bg-background">
+  <div class="container-page">
+    <SectionHeading
+      title={contact.title}
+      subtitle={contact.instruction}
+      align="center"
+    />
+
+    <div
+      class="card-base mx-auto grid max-w-4xl gap-10 p-6 md:grid-cols-[auto_1fr] md:gap-12 md:p-10"
+    >
+      <div class="flex flex-col items-center">
+        {
+          showQr ? (
+            <figure class="overflow-hidden rounded-xl border border-primary/10 bg-white p-3 shadow-[var(--shadow-card)]">
+              <Image
+                src={IMAGES.wechatQr}
+                alt={`WeChat ${CONTACT.wechatId}`}
+                width={430}
+                height={430}
+                loading="lazy"
+                class="h-52 w-52 object-contain md:h-56 md:w-56"
+              />
+            </figure>
+          ) : (
+            <div
+              class="flex h-52 w-52 flex-col items-center justify-center rounded-xl border border-primary/15 bg-surface p-5 md:h-56 md:w-56"
+              role="img"
+              aria-label={`WeChat ${CONTACT.wechatId} ${contact.qrAriaLabel}`}
+            >
+              <span
+                class="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#07C160]/10 font-serif text-2xl font-semibold text-[#07C160]"
+                aria-hidden="true"
+              >
+                微
+              </span>
+              <p class="mt-4 text-center text-xs leading-relaxed text-text-muted">
+                {contact.qrPlaceholder}
+              </p>
+            </div>
+          )
+        }
+        <p class="mt-4 text-center text-sm font-semibold text-primary">
+          {contact.wechatLabel}: {CONTACT.wechatId}
+        </p>
+        <p class="mt-1 text-center text-xs text-text-muted">
+          {contact.wechatNote}
+        </p>
+      </div>
+
+      <div class="flex flex-col justify-center text-center md:text-left">
+        <p class="font-serif text-2xl font-semibold text-primary md:text-3xl">
+          {contact.name}
+        </p>
+        <p class="mt-2 text-sm text-text-muted md:text-base">
+          {contact.tagline}
+        </p>
+        <p
+          class="mt-4 inline-flex items-center justify-center gap-2 text-sm text-text md:justify-start md:text-base"
+        >
+          <span
+            class="inline-block h-1.5 w-1.5 rounded-full bg-accent"
+            aria-hidden="true"
+          />
+          {contact.location}
+        </p>
+
+        <dl class="mt-8 space-y-5 text-left">
+          <div>
+            <dt class="text-xs font-semibold tracking-[0.12em] text-accent uppercase">
+              {contact.wechatLabel}
+            </dt>
+            <dd class="mt-1.5 text-base font-medium text-primary md:text-lg">
+              {CONTACT.wechatId}
+            </dd>
+          </div>
+          <div>
+            <dt class="text-xs font-semibold tracking-[0.12em] text-accent uppercase">
+              {contact.emailLabel}
+            </dt>
+            <dd class="mt-1.5">
+              <a
+                href={buildMailtoUrl(CONTACT.email, mailto.employer)}
+                class="text-base font-medium text-primary underline-offset-4 hover:underline md:text-lg"
+              >
+                {CONTACT.email}
+              </a>
+            </dd>
+          </div>
+        </dl>
+
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <Button
+            href={buildMailtoUrl(CONTACT.email, mailto.trial)}
+            variant="primary"
+            class="flex-1"
+          >
+            {contact.emailTrialButton}
+          </Button>
+          <Button href="#consultation" variant="secondary" class="flex-1">
+            {contact.otherContactButton}
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

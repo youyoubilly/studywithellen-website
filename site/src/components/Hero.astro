@@ -1,0 +1,171 @@
+---
+import Button from "./ui/Button.astro";
+import Image from "./ui/Image.astro";
+import { getHeroImage } from "../config/images";
+import { NAV_LINKS } from "../config/site";
+import type { Locale } from "../i18n";
+import { getPageContent } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { hero, images } = getPageContent(locale);
+const heroImage = getHeroImage();
+const heroAlt = heroImage.isPortrait
+  ? images.hero.portraitAlt
+  : images.hero.stockAlt;
+---
+
+<section
+  id="hero"
+  class="relative overflow-hidden border-b border-primary/10 bg-background"
+>
+  <div
+    class="pointer-events-none absolute -right-20 top-0 h-64 w-64 rounded-full bg-primary/[0.04] md:-right-24 md:-top-24 md:h-96 md:w-96"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div
+    class="container-page grid gap-8 py-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-12 md:py-16 lg:py-20"
+  >
+    <div>
+      <div class="mb-5 flex items-center gap-3 md:hidden">
+        {
+          heroImage.isPortrait ? (
+            <Image
+              src={heroImage.src}
+              alt={heroAlt}
+              width={96}
+              height={96}
+              loading="eager"
+              class="h-14 w-14 shrink-0 rounded-full object-cover object-[center_20%] ring-2 ring-primary/10"
+            />
+          ) : (
+            <div
+              class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary font-serif text-lg font-semibold text-white"
+              aria-hidden="true"
+            >
+              EW
+            </div>
+          )
+        }
+        <div>
+          <p class="font-serif text-base font-semibold text-primary">Ellen Wang</p>
+          <p class="text-xs text-text-muted">{hero.locationShort}</p>
+        </div>
+      </div>
+
+      {
+        !heroImage.isPortrait && (
+          <div class="relative mb-6 overflow-hidden rounded-2xl md:hidden">
+            <Image
+              src={heroImage.src}
+              alt={heroAlt}
+              width={800}
+              height={450}
+              loading="eager"
+              fetchpriority="high"
+              class="aspect-[16/10] h-auto w-full object-cover"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-primary/50 via-primary/10 to-transparent"
+              aria-hidden="true"
+            />
+            <p
+              class="absolute bottom-3 left-4 right-4 text-xs font-medium text-white/90"
+            >
+              {images.hero.stockCaption}
+            </p>
+          </div>
+        )
+      }
+
+      <p
+        class="mb-3 text-xs font-semibold tracking-[0.14em] text-accent uppercase md:text-sm"
+      >
+        {hero.eyebrow}
+      </p>
+
+      <h1
+        class="max-w-xl font-serif text-[1.75rem] leading-[1.2] text-primary md:text-4xl lg:text-[2.75rem] lg:leading-[1.15]"
+      >
+        {hero.headline}
+      </h1>
+
+      <p class="mt-4 max-w-xl text-base leading-relaxed text-text md:mt-5 md:text-lg">
+        {hero.subheadline}
+      </p>
+
+      {
+        hero.subheadlineSecondary && (
+          <p class="mt-2 hidden font-serif text-sm italic leading-relaxed text-text-muted sm:block md:mt-3 md:text-base">
+            {hero.subheadlineSecondary}
+          </p>
+        )
+      }
+
+      <ul class="mt-5 flex flex-wrap gap-2 md:mt-6" aria-label={hero.credentialsAriaLabel}>
+        {
+          hero.credentials.map((cert) => (
+            <li class="rounded-full border border-primary/12 bg-surface px-3 py-1 text-xs font-medium text-primary md:text-sm">
+              {cert}
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap md:mt-8">
+        <Button href={NAV_LINKS.consultation} variant="primary">
+          {hero.ctaPrimary}
+        </Button>
+        <Button href={hero.ctaSecondaryHref} variant="secondary">
+          {hero.ctaSecondary}
+        </Button>
+      </div>
+
+      <p class="mt-5 hidden text-sm leading-relaxed text-text-muted md:line-clamp-3 md:block md:text-base lg:line-clamp-none">
+        {hero.credibility}
+      </p>
+    </div>
+
+    <div class="hidden justify-end md:flex">
+      <figure
+        class="relative w-64 overflow-hidden rounded-2xl border border-primary/10 bg-surface shadow-[var(--shadow-card)] lg:w-72"
+      >
+        <Image
+          src={heroImage.src}
+          alt={heroAlt}
+          width={800}
+          height={1000}
+          loading="eager"
+          fetchpriority="high"
+          class="aspect-[4/5] h-auto w-full object-cover object-[center_20%]"
+        />
+        {
+          heroImage.isPortrait ? (
+            <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-primary/80 to-transparent px-4 pb-4 pt-12 text-center text-white">
+              <p class="font-serif text-lg font-semibold">Ellen Wang</p>
+              <p class="mt-1 text-xs text-white/85">{hero.locationShort}</p>
+            </figcaption>
+          ) : (
+            <>
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-primary/70 via-primary/20 to-transparent"
+                aria-hidden="true"
+              />
+              <figcaption
+                class="absolute inset-x-0 bottom-0 px-4 pb-4 pt-16 text-center text-white"
+              >
+                <p class="font-serif text-lg font-semibold">Ellen Wang</p>
+                <p class="mt-1 text-xs text-white/85">{images.hero.stockCaption}</p>
+              </figcaption>
+            </>
+          )
+        }
+      </figure>
+    </div>
+  </div>
+</section>

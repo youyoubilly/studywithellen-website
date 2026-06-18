@@ -1,0 +1,15 @@
+{
+  "name": "international-schools",
+  "version": "1.0.0",
+  "description": "Ellen English Studio 学校触达用参考资料。每校一个文件夹，内含 `RESEARCH.md`。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pdfkit": "^0.19.1"
+  }
+}

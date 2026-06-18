@@ -1,0 +1,112 @@
+---
+import SectionHeading from "./ui/SectionHeading.astro";
+import Button from "./ui/Button.astro";
+import {
+  BOOKING_URL,
+  CONTACT,
+  EXTERNAL_LINK,
+  NAV_LINKS,
+  buildMailtoUrl,
+} from "../config/site";
+import type { Locale } from "../i18n";
+import { getPageContent } from "../i18n";
+import type { ConsultationContent } from "../i18n/types";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { consultation, mailto } = getPageContent(locale);
+
+function resolveCardHref(
+  card: ConsultationContent["cards"][number],
+): string {
+  if (card.href === "mailto") {
+    return buildMailtoUrl(CONTACT.email, mailto.employer);
+  }
+  if (card.href === "calendar") {
+    return BOOKING_URL;
+  }
+  return card.href;
+}
+
+const cardIcons: Record<string, Record<Locale, string>> = {
+  wechat: { zh: "微", en: "WX" },
+  email: { zh: "@", en: "@" },
+  calendar: { zh: "Cal", en: "Cal" },
+};
+---
+
+<section id="consultation" class="section-pad border-b border-primary/10 bg-surface">
+  <div class="container-page">
+    <SectionHeading
+      title={consultation.title}
+      titleEn={consultation.titleSecondary}
+      subtitle={consultation.subtitle}
+    />
+
+    <div class="grid gap-5 md:grid-cols-3 md:gap-6">
+      {
+        consultation.cards.map((card) => {
+          const href = resolveCardHref(card);
+          const isExternal = !card.internal && card.href === "calendar";
+
+          return (
+            <article class="card-base card-hover flex flex-col p-6 md:p-7">
+              <div class="mb-4 flex items-center gap-3">
+                <span
+                  class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/8 font-serif text-base font-semibold text-primary"
+                  aria-hidden="true"
+                >
+                  {cardIcons[card.id][locale]}
+                </span>
+                <div>
+                  <h3 class="font-serif text-lg font-semibold text-primary">
+                    {card.title}
+                  </h3>
+                  {card.titleSecondary && (
+                    <p class="text-xs text-text-muted">{card.titleSecondary}</p>
+                  )}
+                </div>
+              </div>
+
+              <p class="mb-6 flex-1 text-sm leading-relaxed text-text-muted md:text-base">
+                {card.description}
+              </p>
+
+              {isExternal ? (
+                <a
+                  href={href}
+                  {...EXTERNAL_LINK}
+                  class="inline-flex min-h-[44px] w-full items-center justify-center rounded-full border border-primary/20 bg-background px-5 py-3 text-sm font-medium text-primary transition-colors hover:border-primary/35 hover:bg-primary/5"
+                >
+                  {card.actionLabel}
+                </a>
+              ) : (
+                <Button
+                  href={href}
+                  variant={card.id === "calendar" ? "primary" : "secondary"}
+                  class="w-full"
+                >
+                  {card.actionLabel}
+                </Button>
+              )}
+            </article>
+          );
+        })
+      }
+    </div>
+
+    <p class="mt-8 text-center text-sm leading-relaxed text-text-muted">
+      {consultation.footerHint}{" "}
+      <a
+        href={NAV_LINKS.contact}
+        class="font-medium text-primary underline-offset-4 hover:underline"
+      >
+        {consultation.footerLinkLabel}
+      </a>
+      {consultation.footerHintSuffix}
+    </p>
+  </div>
+</section>

@@ -1,0 +1,63 @@
+---
+import Button from "./ui/Button.astro";
+import LangSwitch from "./LangSwitch.astro";
+import type { Locale } from "../i18n";
+import { getLocalePath, getPageContent } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { header, hero } = getPageContent(locale);
+const homeHref = `${getLocalePath(locale)}#hero`;
+---
+
+<header
+  class="sticky top-0 z-50 border-b border-primary/10 bg-background/90 shadow-sm shadow-primary/5 backdrop-blur-md"
+>
+  <div
+    class="container-page flex items-center justify-between gap-2 py-3 sm:gap-3 md:gap-4 md:py-4"
+  >
+    <a
+      href={homeHref}
+      class="group min-w-0 flex-1 sm:flex-none"
+      aria-label={header.homeAriaLabel}
+    >
+      <span class="block font-serif text-base font-semibold text-primary md:text-lg">
+        Ellen Wang
+      </span>
+      <span class="hidden truncate text-xs text-text-muted sm:block md:text-sm">
+        {hero.locationShort}
+      </span>
+    </a>
+
+    <nav
+      class="flex shrink-0 items-center gap-1.5 sm:gap-2 md:gap-3"
+      aria-label={header.navAriaLabel}
+    >
+      {
+        header.nav.map((item) => (
+          <Button
+            href={item.href}
+            variant={item.variant}
+            class:list={[
+              "px-3 text-xs sm:px-4 md:px-5 md:text-sm",
+              item.hideBelow === "md" && "max-md:hidden",
+            ]}
+          >
+            {item.mobileLabel ? (
+              <>
+                <span class="md:hidden">{item.mobileLabel}</span>
+                <span class="hidden md:inline">{item.label}</span>
+              </>
+            ) : (
+              item.label
+            )}
+          </Button>
+        ))
+      }
+      <LangSwitch locale={locale} />
+    </nav>
+  </div>
+</header>

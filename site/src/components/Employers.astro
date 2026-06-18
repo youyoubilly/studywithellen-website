@@ -1,0 +1,71 @@
+---
+import SectionHeading from "./ui/SectionHeading.astro";
+import Button from "./ui/Button.astro";
+import { CONTACT } from "../config/site";
+import type { Locale } from "../i18n";
+import { getPageContent } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { employers } = getPageContent(locale);
+---
+
+<section
+  id="employers"
+  class="section-pad border-b border-primary/10 bg-employers-bg"
+>
+  <div class="container-page">
+    <SectionHeading title={employers.title} />
+
+    <div
+      class="card-base border-l-4 border-l-accent p-6 md:p-10 lg:p-12"
+    >
+      <div class="max-w-3xl space-y-5 font-serif text-base leading-relaxed text-text md:text-lg">
+        {
+          employers.paragraphs.map((paragraph) => (
+            <p>{paragraph}</p>
+          ))
+        }
+
+        <div class="space-y-4 border-t border-primary/10 pt-6 text-base md:text-lg">
+          <p>
+            <strong class="font-semibold text-primary">{employers.specialismsLabel}</strong>
+            {" "}
+            {employers.specialisms}
+          </p>
+          <p>
+            <strong class="font-semibold text-primary">{employers.availableLabel}</strong>
+            {" "}
+            {employers.available}
+          </p>
+          <p>
+            <strong class="font-semibold text-primary">{employers.credentialsLabel}</strong>
+            {" "}
+            {employers.credentials}
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="mt-8 flex flex-col gap-4 border-t border-primary/10 pt-8 sm:flex-row sm:items-center sm:justify-between"
+      >
+        <p class="text-sm text-text-muted md:text-base">
+          {employers.contactLabel}{" "}
+          <a
+            href={`mailto:${employers.ctaEmail}`}
+            class="font-medium text-primary underline-offset-2 hover:underline"
+          >
+            {employers.ctaEmail}
+          </a>
+          {" "}· WeChat {employers.ctaWechat} {employers.contactNote}
+        </p>
+        <Button href={`mailto:${CONTACT.email}`} variant="secondary">
+          {employers.emailButton}
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>

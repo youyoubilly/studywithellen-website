@@ -1,0 +1,41 @@
+---
+import SectionHeading from "./ui/SectionHeading.astro";
+import type { Locale } from "../i18n";
+import { getPageContent } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { audience } = getPageContent(locale);
+---
+
+<section id="audience" class="section-pad border-b border-primary/10 bg-background">
+  <div class="container-page">
+    <SectionHeading title={audience.title} />
+
+    <div class="grid gap-5 md:grid-cols-3 md:gap-6 lg:gap-8">
+      {
+        audience.segments.map((segment) => (
+          <article class="card-base card-hover p-6 md:p-7">
+            <h3 class="font-serif text-lg font-semibold text-primary md:text-xl">
+              {segment.title}
+            </h3>
+            <ul class="mt-4 space-y-2.5">
+              {segment.items.map((item) => (
+                <li class="flex gap-2.5 text-sm leading-relaxed text-text md:text-base">
+                  <span
+                    class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
+                    aria-hidden="true"
+                  />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
