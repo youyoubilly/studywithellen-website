@@ -1,0 +1,40 @@
+---
+description: Astro site coding conventions for site/
+globs: site/**
+alwaysApply: false
+---
+
+# Site conventions
+
+## Structure
+
+- Config: `site/src/config/site.ts` (URLs, contact, SEO, booking URL)
+- Pages: `site/src/pages/` — `index.astro` (zh), `en/index.astro`
+- Sections: one component per homepage block in `site/src/components/`
+- Shared UI: `site/src/components/ui/`
+
+## i18n
+
+- All user-visible strings live in `site/src/i18n/zh.ts` and `en.ts`
+- Do not hardcode copy in `.astro` files except structural markup
+- Keep zh/en section keys aligned (tests in `site/src/i18n/`)
+
+## Styling
+
+- Tailwind 4 via `site/src/styles/global.css`
+- Use design tokens from `website/design-brief.md`; avoid loud colors or cartoon styling
+- Prefer existing component patterns over new abstractions
+
+## Quality gates (before done)
+
+```bash
+cd site
+npm test && npm run check && npm run build
+# UI changes:
+npm run test:e2e
+```
+
+## Security
+
+- Static site only — no secrets, no server-side forms in repo
+- External links: `rel="noopener noreferrer"`

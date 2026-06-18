@@ -1,20 +1,24 @@
 # AGENTS.md — Ellen Wang English Studio Website
 
-Agent handbook for long-run development of this static site.
+Agent handbook for **SophiaW** and other agents doing long-run development of this static site.
+
+**Repository:** `git@github.com:youyoubilly/studywithellen-website.git`  
+**Workspace:** `/home/bbot/ellen-studio` (this VPS — edit files directly; no custom MCP needed)
 
 ## Project layout
 
 ```
-hk1/Ellen-English-Studio/
+studywithellen-website/
 ├── site/                 ← Astro app (work here)
 │   ├── src/config/site.ts   ← URLs, contact, SEO, calendar URL
-│   ├── src/components/      ← Section components (Stage 1+)
+│   ├── src/components/      ← Section components
+│   ├── src/i18n/            ← zh.ts + en.ts (all copy)
 │   ├── src/layouts/         ← BaseLayout.astro
 │   ├── e2e/                 ← Playwright tests
 │   └── CHANGELOG.md
 ├── website/copy/         ← Source copy (markdown)
 ├── website/design-brief.md
-├── ops/nginx-ellen.conf  ← HK1 nginx vhost (Stage 6)
+├── ops/nginx-ellen.conf  ← HK1 nginx vhost
 ├── scripts/deploy-hk1.sh
 ├── HANDOFF.md            ← Ellen/Billy launch checklist
 └── ops-log.md
@@ -23,7 +27,7 @@ hk1/Ellen-English-Studio/
 ## Commands
 
 ```bash
-cd hk1/Ellen-English-Studio/site
+cd site
 
 npm run dev          # Local dev → http://127.0.0.1:4321
 npm run build        # Static output → dist/
@@ -36,23 +40,25 @@ npm run verify:nginx # ops/nginx-ellen.conf security headers
 npm run verify:delivery # Full Stage 7 gate (local QA + prod E2E + Lighthouse)
 ```
 
-Deploy (Stage 6+):
+Deploy:
 
 ```bash
-# First time on a fresh HK1:
+cd site
+npm run qa                    # Full gate before deploy
+../scripts/deploy-hk1.sh      # QA + rsync to HK1 + smoke
+../scripts/smoke-prod.sh      # Prod smoke only
+```
+
+First-time server setup (already done on HK1):
+
+```bash
 ../scripts/setup-hk1.sh
-
-# Build, QA gate, rsync, smoke:
-npm run qa           # Run full gate before deploy
-../scripts/deploy-hk1.sh
-
-# Prod smoke only:
-../scripts/smoke-prod.sh
 ```
 
 ## Public URL
 
 - **Production:** `http://hk1.youyoubilly.com:8080`
+- **English:** `http://hk1.youyoubilly.com:8080/en/`
 - Config: `src/config/site.ts` → `SITE_HOST`, `SITE_PORT`, `SITE_URL`
 
 ## Stage gates
@@ -67,11 +73,12 @@ Before marking a stage complete:
 
 ## Visual QA (Cursor browser)
 
+No custom MCP server is required — use Cursor's built-in browser tools:
+
 1. `npm run dev`
-2. `browser_navigate` → `http://127.0.0.1:4321`
-3. CDP viewport: 375×812, 768×1024, 1280×800
-4. `browser_snapshot` + `browser_take_screenshot`
-5. Fix spacing/typography/CTAs; re-verify
+2. Navigate to `http://127.0.0.1:4321`
+3. Viewports: 375×812, 768×1024, 1280×800
+4. Snapshot + screenshot; fix spacing/typography/CTAs; re-verify
 
 ## Design tokens
 
@@ -96,7 +103,7 @@ From `../website/design-brief.md`:
 
 - Static site only — no server-side forms or secrets in repo
 - External links: `rel="noopener noreferrer"`
-- nginx security headers on HK1 (Stage 6) — see `../ops/nginx-ellen.conf`
+- nginx security headers on HK1 — see `../ops/nginx-ellen.conf`
 - Never commit `.env` with credentials
 
 ## Audiences

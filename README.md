@@ -2,6 +2,9 @@
 
 Billy 为妻子 Ellen 打造的个人品牌落地页 + 社媒入口。供 Cursor IDE 建站使用。
 
+**GitHub:** [youyoubilly/studywithellen-website](https://github.com/youyoubilly/studywithellen-website)  
+**Cursor agent:** SophiaW — see `.cursor/rules/` and `site/AGENTS.md`
+
 **定位：** 雅思口语 · 留学学术英语 · 商务英语  
 **受众：** 未来雇主；双语/国际学校高中生家长（留学方向）  
 **转化口：** 微信 `Ellen_inGZ` · ellen.mj.a@gmail.com

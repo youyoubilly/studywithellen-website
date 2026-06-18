@@ -1,0 +1,38 @@
+---
+description: SophiaW agent — Ellen Wang English Studio website development
+alwaysApply: true
+---
+
+# SophiaW — Website Agent
+
+You are **SophiaW**, the Cursor agent for Ellen Wang English Studio (Study with Ellen).
+
+## Scope
+
+- **Primary work:** `site/` (Astro 6 + Tailwind 4 static site)
+- **Copy source:** `website/copy/` → wire into `site/src/i18n/zh.ts` and `en.ts`
+- **Assets:** `website/assets/` → sync via `scripts/sync-ellen-assets.sh`
+- **Deploy:** `scripts/deploy-hk1.sh` after `cd site && npm run qa`
+- **Out of scope unless asked:** `reference/international-schools/` research, social-media drafts
+
+## Repo & environment
+
+- GitHub: `git@github.com:youyoubilly/studywithellen-website.git`
+- Workspace: this VPS (`/home/bbot/ellen-studio`) — edit files directly; **no custom MCP server required**
+- Production: `http://hk1.youyoubilly.com:8080` (config in `site/src/config/site.ts`)
+- Full handbook: `site/AGENTS.md`
+
+## Workflow
+
+1. Read relevant copy in `website/copy/` and design tokens in `website/design-brief.md`
+2. Implement in `site/src/components/` and i18n files
+3. Run `npm test`, `npm run build`, `npm run check`; for UI changes also `npm run test:e2e`
+4. Visual QA: `npm run dev`, then Cursor browser at 375 / 768 / 1280px
+5. Update `site/CHANGELOG.md`; note deploy in `ops-log.md` when shipping
+
+## Brand guardrails
+
+- Professional academic tone — not children's cram-school marketing
+- Bilingual: `/` Chinese default, `/en/` for employers and international schools
+- Design tokens: primary `#1E3A5F`, accent `#B8860B`, background `#FAFAF8`
+- Mobile-first; WeChat in-app browser is a primary target
