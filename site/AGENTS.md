@@ -16,6 +16,10 @@ studywithellen-website/
 │   ├── src/layouts/         ← BaseLayout.astro
 │   ├── e2e/                 ← Playwright tests
 │   └── CHANGELOG.md
+├── booking/              ← Self-hosted /book/ form (Hono service)
+│   ├── src/routes/pages.ts
+│   ├── public/book.js      ← Slot picker + timezone UI
+│   └── config/schedule.yaml
 ├── website/copy/         ← Source copy (markdown)
 ├── website/design-brief.md
 ├── ops/nginx-ellen.conf  ← HK1 nginx vhost
@@ -46,6 +50,7 @@ Deploy:
 cd site
 npm run qa                    # Full gate before deploy
 ../scripts/deploy-hk1.sh      # QA + rsync to HK1 + smoke
+../scripts/deploy-booking.sh  # Booking service only (/book/)
 ../scripts/smoke-prod.sh      # Prod smoke only
 ```
 

@@ -2,6 +2,14 @@
 
 > HK1 deployment and server changes. Append only.
 
+## 2026-06-19 — Booking UX & timezone (v1.8.0)
+
+- Migrated `ellen-booking` into repo at `booking/`
+- Modular slot picker: date tabs, clickable time blocks, timezone dropdown
+- `clientTimezone` on requests; Telegram dual-timezone lines
+- Deploy: `scripts/deploy-booking.sh` → `/opt/ellen-booking`, restart `ellen-booking.service`
+- Booking unit tests: 20 passed; live `/book/` on port 8787
+
 ## 2026-06-10 — Stage 11 Ellen assets (v1.4.0)
 
 - Hero: Ellen portrait from CV (`website/assets/ellen-portrait.jpg`) → WebP, stock desk retired

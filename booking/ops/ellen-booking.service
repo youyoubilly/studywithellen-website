@@ -1,0 +1,17 @@
+[Unit]
+Description=Ellen Wang English Studio Booking Service
+After=network.target
+
+[Service]
+Type=simple
+User=bbot
+Group=bbot
+WorkingDirectory=/opt/ellen-booking
+EnvironmentFile=/etc/ellen-booking.env
+ExecStart=/home/bbot/.nvm/versions/node/v22.22.3/bin/node --import tsx /opt/ellen-booking/src/server.ts
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

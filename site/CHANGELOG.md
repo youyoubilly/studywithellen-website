@@ -2,6 +2,20 @@
 
 All notable changes to the Ellen Wang English Studio website.
 
+## [1.8.0] — 2026-06-19 — Booking UX & timezone
+
+### Added
+
+- `booking/` service in repo — modular slot picker (date tabs + clickable time blocks)
+- Timezone dropdown with auto-detect; dates grouped by user's local calendar
+- `clientTimezone` stored on requests; Telegram shows CST + client local time
+- `scripts/deploy-booking.sh` for HK1 booking service deploy
+
+### Changed
+
+- Booking form brand colors aligned with design brief (`#1E3A5F` / `#B8860B`)
+- Purpose selector uses pill buttons; noscript fallback keeps checkbox list
+
 ## [1.7.0] — 2026-06-10 — Self-hosted booking
 
 ### Added

@@ -40,9 +40,11 @@ cd hk1/Ellen-English-Studio/site
 # Edit copy in src/i18n/zh.ts and src/i18n/en.ts (source: website/copy/)
 # Edit images: drop files in website/assets/ then ../scripts/sync-ellen-assets.sh
 # Edit config in src/config/site.ts
+# Edit booking form: ../booking/ then ../scripts/deploy-booking.sh
 
-../scripts/deploy-hk1.sh    # QA gate + rsync + smoke
-../scripts/smoke-prod.sh    # Quick prod check only
+../scripts/deploy-hk1.sh       # QA gate + rsync + smoke
+../scripts/deploy-booking.sh   # Booking /book/ service
+../scripts/smoke-prod.sh       # Quick prod check only
 ```
 
 First-time server setup (already done 2026-06-10):
@@ -90,6 +92,7 @@ ssh hk1 'sudo ln -sf /etc/nginx/sites-available/ellen /etc/nginx/sites-enabled/e
 | Path | Role |
 |------|------|
 | `site/` | Astro 6 + Tailwind 4 app |
+| `booking/` | Hono booking form at `/book/` |
 | `site/src/config/site.ts` | URL, contact, SEO, calendar |
 | `site/src/i18n/zh.ts` / `en.ts` | Page copy (Chinese + English) |
 | `site/src/lib/content.ts` | Chinese re-exports (legacy/tests) |
