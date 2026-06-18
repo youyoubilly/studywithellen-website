@@ -11,7 +11,7 @@ const { locale } = Astro.props;
 const { faq } = getPageContent(locale);
 ---
 
-<section id="faq" class="section-pad border-b border-primary/10 bg-background">
+<section id="faq" class="section-pad border-b border-border bg-background">
   <div class="mx-auto max-w-3xl px-4 md:px-6">
     <SectionHeading title={faq.title} />
 
@@ -19,19 +19,19 @@ const { faq } = getPageContent(locale);
       {
         faq.items.map((item) => (
           <details
-            class="group rounded-xl border border-primary/10 bg-surface open:border-primary/15 open:shadow-[var(--shadow-card)]"
+            class="group rounded-xl border border-border bg-surface open:border-accent/25 open:shadow-[var(--shadow-card)]"
             open={item.openByDefault || undefined}
           >
-            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 rounded-xl px-5 py-4 text-base font-medium text-primary transition-colors hover:bg-primary/[0.03] marker:content-none md:px-6 md:py-5 md:text-lg [&::-webkit-details-marker]:hidden">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 rounded-xl px-5 py-4 text-base font-medium text-text transition-colors hover:bg-black/[0.02] marker:content-none md:px-6 md:py-5 md:text-lg [&::-webkit-details-marker]:hidden">
               <span>{item.question}</span>
               <span
-                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/5 text-primary transition-transform group-open:rotate-45"
+                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent transition-transform group-open:rotate-45"
                 aria-hidden="true"
               >
                 +
               </span>
             </summary>
-            <div class="border-t border-primary/10 px-5 pb-5 pt-4 text-sm leading-relaxed text-text-muted md:px-6 md:pb-6 md:text-base">
+            <div class="border-t border-border px-5 pb-5 pt-4 text-sm leading-relaxed text-text-muted md:px-6 md:pb-6 md:text-base">
               {item.answer}
             </div>
           </details>

@@ -18,6 +18,18 @@ function getClientIp(headerValue: string | undefined): string {
   return headerValue.split(",")[0]?.trim() || "unknown";
 }
 
+function resolveFormLocale(value: unknown): "zh" | "en" {
+  return value === "en" ? "en" : "zh";
+}
+
+function redirectFormError(
+  c: { redirect: (location: string, status: 303) => Response },
+  locale: "zh" | "en",
+  error: "validation" | "rate_limited" | "invalid_slot",
+): Response {
+  return c.redirect(`/book/?lang=${locale}&error=${error}`, 303);
+}
+
 function isAgentAuthorized(
   config: AppConfig,
   headerToken: string | undefined,
@@ -100,11 +112,17 @@ export function createApiRoutes(
     }
 
     const parsed = bookingRequestSchema.safeParse(body);
+    const formLocale = resolveFormLocale(body.locale);
+    const wantsJson = contentType.includes("application/json");
+
     if (!parsed.success) {
-      return c.json(
-        { error: "validation_failed", details: parsed.error.flatten() },
-        400,
-      );
+      if (wantsJson) {
+        return c.json(
+          { error: "validation_failed", details: parsed.error.flatten() },
+          400,
+        );
+      }
+      return redirectFormError(c, formLocale, "validation");
     }
 
     const clientIp = getClientIp(
@@ -112,7 +130,10 @@ export function createApiRoutes(
     );
 
     if (!checkRateLimit(clientIp)) {
-      return c.json({ error: "rate_limited" }, 429);
+      if (wantsJson) {
+        return c.json({ error: "rate_limited" }, 429);
+      }
+      return redirectFormError(c, parsed.data.locale, "rate_limited");
     }
 
     const slots = generateAvailableSlots(config.schedule);
@@ -121,7 +142,10 @@ export function createApiRoutes(
     );
 
     if (invalidSlot) {
-      return c.json({ error: "invalid_slot", slotId: invalidSlot }, 400);
+      if (wantsJson) {
+        return c.json({ error: "invalid_slot", slotId: invalidSlot }, 400);
+      }
+      return redirectFormError(c, parsed.data.locale, "invalid_slot");
     }
 
     const row = createBookingRequest(database, {
@@ -152,8 +176,8 @@ export function createApiRoutes(
       }
     }
 
-    const wantsJson = contentType.includes("application/json");
-    if (wantsJson) {
+    const wantsJsonResponse = contentType.includes("application/json");
+    if (wantsJsonResponse) {
       return c.json(
         {
           id: row.id,

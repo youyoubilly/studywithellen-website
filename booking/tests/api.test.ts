@@ -124,4 +124,27 @@ describe("booking API", () => {
     };
     expect(body.requests[0]?.name).toBe("Ellen Test");
   });
+
+  it("redirects HTML form posts with validation errors", async () => {
+    resetDbForTests();
+    resetRateLimits();
+    const app = createApp(testConfig());
+
+    const response = await app.request("/book/api/requests", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "x-forwarded-for": "10.0.0.4",
+      },
+      body: new URLSearchParams({
+        name: "No Contact",
+        purpose: "trial",
+        locale: "en",
+        preferredSlots: "2026-06-22T10:00:00+08:00",
+      }).toString(),
+    });
+
+    expect(response.status).toBe(303);
+    expect(response.headers.get("location")).toBe("/book/?lang=en&error=validation");
+  });
 });

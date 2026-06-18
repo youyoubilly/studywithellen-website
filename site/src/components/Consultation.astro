@@ -38,7 +38,7 @@ const cardIcons: Record<string, Record<Locale, string>> = {
 };
 ---
 
-<section id="consultation" class="section-pad border-b border-primary/10 bg-surface">
+<section id="consultation" class="section-pad border-b border-border bg-surface">
   <div class="container-page">
     <SectionHeading
       title={consultation.title}
@@ -56,13 +56,13 @@ const cardIcons: Record<string, Record<Locale, string>> = {
             <article class="card-base card-hover flex flex-col p-6 md:p-7">
               <div class="mb-4 flex items-center gap-3">
                 <span
-                  class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/8 font-serif text-base font-semibold text-primary"
+                  class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent/12 font-serif text-base font-semibold text-accent"
                   aria-hidden="true"
                 >
                   {cardIcons[card.id][locale]}
                 </span>
                 <div>
-                  <h3 class="font-serif text-lg font-semibold text-primary">
+                  <h3 class="font-serif text-lg font-semibold text-text">
                     {card.title}
                   </h3>
                   {card.titleSecondary && (
@@ -79,7 +79,7 @@ const cardIcons: Record<string, Record<Locale, string>> = {
                 <a
                   href={href}
                   {...EXTERNAL_LINK}
-                  class="inline-flex min-h-[44px] w-full items-center justify-center rounded-full border border-primary/20 bg-background px-5 py-3 text-sm font-medium text-primary transition-colors hover:border-primary/35 hover:bg-primary/5"
+                  class="inline-flex min-h-[44px] w-full items-center justify-center rounded-full border border-border bg-background px-5 py-3 text-sm font-medium text-text transition-colors hover:border-primary/30 hover:text-primary hover:bg-primary/5"
                 >
                   {card.actionLabel}
                 </a>

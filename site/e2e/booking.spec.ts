@@ -37,4 +37,17 @@ test.describe("booking form", () => {
     );
     await expect(page.locator("#timezone-select")).toBeVisible();
   });
+
+  test("submits booking request and reaches success page", async ({ page }) => {
+    await page.fill('input[name="name"]', "E2E User");
+    await page.fill('input[name="email"]', "e2e@example.com");
+    await page.locator("#time-grid .time-chip", { hasText: "10:00" }).click();
+    await Promise.all([
+      page.waitForURL("**/book/success**"),
+      page.getByRole("button", { name: /Submit request|提交申请/ }).click(),
+    ]);
+    await expect(page.getByRole("heading", { level: 1 })).toContainText(
+      /Request received|申请已提交/,
+    );
+  });
 });

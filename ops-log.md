@@ -2,6 +2,12 @@
 
 > HK1 deployment and server changes. Append only.
 
+## 2026-06-19 — Booking link & submit fixes (v1.8.1)
+
+- `BOOKING_URL` → `/book/`; `SITE_URL` → `https://studywithellen.com`
+- Booking form: purpose hidden input, client validation, server error redirects
+- Deploy: `deploy-booking.sh` + `astro build` → `/var/www/ellen/`
+
 ## 2026-06-19 — Booking UX & timezone (v1.8.0)
 
 - Migrated `ellen-booking` into repo at `booking/`

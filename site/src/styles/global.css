@@ -1,21 +1,26 @@
 @import "tailwindcss";
 
 @theme {
-  /* Estonian Blue — national flag blue (PANTONE 285 C) */
+  /* Estonian Blue — CTAs and links only */
   --color-primary: #0072ce;
   --color-primary-light: #005ba3;
-  --color-accent: #0072ce;
-  --color-accent-hover: #005ba3;
+  /* Warm gold — decorative accents */
+  --color-accent: #b8860b;
+  --color-accent-hover: #9a7209;
+  --color-accent-muted: #d4a843;
+  /* Neutrals */
   --color-background: #fafaf8;
   --color-surface: #ffffff;
-  --color-employers-bg: #e8f2fa;
+  --color-employers-bg: #f3f0ea;
+  --color-border: #e5e2dc;
+  --color-footer: #252422;
   --color-text: #1a1a1a;
   --color-text-muted: #4a4a4a;
   --font-serif: Georgia, "Times New Roman", serif;
   --font-sans: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
-  --shadow-card: 0 1px 3px rgb(0 114 206 / 6%), 0 8px 24px rgb(0 114 206 / 4%);
-  --shadow-card-hover: 0 4px 12px rgb(0 114 206 / 8%),
-    0 12px 32px rgb(0 114 206 / 6%);
+  --shadow-card: 0 1px 3px rgb(26 26 26 / 4%), 0 8px 24px rgb(26 26 26 / 3%);
+  --shadow-card-hover: 0 4px 12px rgb(26 26 26 / 6%),
+    0 12px 32px rgb(26 26 26 / 4%);
 }
 
 @layer base {
@@ -50,8 +55,8 @@
   }
 
   ::selection {
-    background-color: rgb(0 114 206 / 22%);
-    color: var(--color-primary);
+    background-color: rgb(184 134 11 / 20%);
+    color: var(--color-text);
   }
 }
 
@@ -87,7 +92,7 @@
 
 @utility card-base {
   border-radius: 1rem;
-  border: 1px solid rgb(0 114 206 / 10%);
+  border: 1px solid var(--color-border);
   background-color: var(--color-surface);
   box-shadow: var(--shadow-card);
 }
@@ -100,6 +105,6 @@
 
   &:hover {
     box-shadow: var(--shadow-card-hover);
-    border-color: rgb(0 114 206 / 16%);
+    border-color: rgb(26 26 26 / 12%);
   }
 }

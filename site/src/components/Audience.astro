@@ -11,7 +11,7 @@ const { locale } = Astro.props;
 const { audience } = getPageContent(locale);
 ---
 
-<section id="audience" class="section-pad border-b border-primary/10 bg-background">
+<section id="audience" class="section-pad border-b border-border bg-background">
   <div class="container-page">
     <SectionHeading title={audience.title} />
 
@@ -19,7 +19,7 @@ const { audience } = getPageContent(locale);
       {
         audience.segments.map((segment) => (
           <article class="card-base card-hover p-6 md:p-7">
-            <h3 class="font-serif text-lg font-semibold text-primary md:text-xl">
+            <h3 class="font-serif text-lg font-semibold text-text md:text-xl">
               {segment.title}
             </h3>
             <ul class="mt-4 space-y-2.5">

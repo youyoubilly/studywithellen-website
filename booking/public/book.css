@@ -429,7 +429,28 @@ fieldset {
 }
 
 .hidden-inputs {
-  display: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.form-error {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  background: rgb(180 50 50 / 8%);
+  border: 1px solid rgb(180 50 50 / 20%);
+  color: #8b2e2e;
+  font-size: 0.9375rem;
+}
+
+.btn-primary:disabled {
+  opacity: 0.65;
+  cursor: wait;
 }
 
 @media (width >= 768px) {

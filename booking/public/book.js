@@ -123,20 +123,32 @@
     return [...groups.entries()].sort(([a], [b]) => a.localeCompare(b));
   }
 
+  function showClientError(form, message) {
+    const el = form.querySelector("#form-client-error");
+    if (!el) return;
+    if (message) {
+      el.textContent = message;
+      el.hidden = false;
+      el.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    } else {
+      el.textContent = "";
+      el.hidden = true;
+    }
+  }
+
   function initPurposePills(form) {
     const group = form.querySelector(".purpose-pills");
-    if (!group) return;
+    const purposeInput = form.querySelector("#purpose-input");
+    if (!group || !purposeInput) return;
 
     const pills = group.querySelectorAll(".purpose-pill");
-    const radios = form.querySelectorAll('input[type="radio"][name="purpose"]');
 
     pills.forEach((pill) => {
       pill.addEventListener("click", () => {
         const value = pill.getAttribute("data-value");
-        radios.forEach((radio) => {
-          const input = /** @type {HTMLInputElement} */ (radio);
-          input.checked = input.value === value;
-        });
+        if (value) {
+          purposeInput.value = value;
+        }
         syncPurposePills(form);
       });
     });
@@ -145,11 +157,20 @@
   }
 
   function syncPurposePills(form) {
-    const checked = form.querySelector('input[type="radio"][name="purpose"]:checked');
-    const value = checked ? checked.getAttribute("value") : "trial";
+    const purposeInput = form.querySelector("#purpose-input");
+    const value = purposeInput?.value || "trial";
     form.querySelectorAll(".purpose-pill").forEach((pill) => {
       pill.setAttribute("aria-pressed", pill.getAttribute("data-value") === value ? "true" : "false");
     });
+  }
+
+  function validateContact(form, copy) {
+    const email = /** @type {HTMLInputElement | null} */ (form.querySelector('[name="email"]'))?.value.trim();
+    const phone = /** @type {HTMLInputElement | null} */ (form.querySelector('[name="phone"]'))?.value.trim();
+    if (!email && !phone) {
+      return copy.contactRequired || "Provide at least email or phone.";
+    }
+    return "";
   }
 
   function initSlotPicker(config) {
@@ -160,7 +181,6 @@
     const locale = config.locale || "zh";
     const copy = config.copy || {};
     const maxSelections = config.maxPreferences || MAX_DEFAULT;
-    const studioTz = config.studioTimezone || "Asia/Shanghai";
     const intlLocale = locale === "en" ? "en-GB" : "zh-CN";
 
     let userTz = storedTimezone() || detectTimezone();
@@ -170,6 +190,7 @@
 
     let selected = new Set();
     let activeDate = null;
+    let submitting = false;
 
     const tzSelect = document.getElementById("timezone-select");
     const dayTabsEl = document.getElementById("day-tabs");
@@ -178,6 +199,7 @@
     const countEl = document.getElementById("selected-count");
     const hiddenInputsEl = document.getElementById("slot-hidden-inputs");
     const clientTzInput = document.getElementById("client-timezone-input");
+    const submitBtn = document.getElementById("submit-btn");
 
     if (tzSelect) {
       TIMEZONES.forEach((tz) => {
@@ -307,6 +329,7 @@
           } else if (selected.size < maxSelections) {
             selected.add(entry.id);
           }
+          showClientError(form, "");
           render();
         });
 
@@ -353,10 +376,41 @@
     }
 
     form.addEventListener("submit", (event) => {
+      if (submitting) {
+        event.preventDefault();
+        return;
+      }
+
       syncHiddenInputs();
+      showClientError(form, "");
+
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        form.reportValidity();
+        return;
+      }
+
+      const contactError = validateContact(form, copy);
+      if (contactError) {
+        event.preventDefault();
+        showClientError(form, contactError);
+        return;
+      }
+
       if (selected.size === 0) {
         event.preventDefault();
-        alert(copy.selectAtLeastOne || (locale === "en" ? "Please choose at least one time." : "请至少选择一个时段。"));
+        showClientError(form, copy.selectAtLeastOne || (locale === "en" ? "Please choose at least one time." : "请至少选择一个时段。"));
+        root.scrollIntoView({ block: "start", behavior: "smooth" });
+        return;
+      }
+
+      submitting = true;
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.setAttribute("aria-busy", "true");
+        const submittingLabel = locale === "en" ? "Submitting…" : "提交中…";
+        submitBtn.dataset.defaultLabel = submitBtn.textContent || "";
+        submitBtn.textContent = submittingLabel;
       }
     });
 

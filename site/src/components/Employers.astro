@@ -15,7 +15,7 @@ const { employers } = getPageContent(locale);
 
 <section
   id="employers"
-  class="section-pad border-b border-primary/10 bg-employers-bg"
+  class="section-pad border-b border-border bg-employers-bg"
 >
   <div class="container-page">
     <SectionHeading title={employers.title} />
@@ -30,19 +30,19 @@ const { employers } = getPageContent(locale);
           ))
         }
 
-        <div class="space-y-4 border-t border-primary/10 pt-6 text-base md:text-lg">
+        <div class="space-y-4 border-t border-border pt-6 text-base md:text-lg">
           <p>
-            <strong class="font-semibold text-primary">{employers.specialismsLabel}</strong>
+            <strong class="font-semibold text-accent">{employers.specialismsLabel}</strong>
             {" "}
             {employers.specialisms}
           </p>
           <p>
-            <strong class="font-semibold text-primary">{employers.availableLabel}</strong>
+            <strong class="font-semibold text-accent">{employers.availableLabel}</strong>
             {" "}
             {employers.available}
           </p>
           <p>
-            <strong class="font-semibold text-primary">{employers.credentialsLabel}</strong>
+            <strong class="font-semibold text-accent">{employers.credentialsLabel}</strong>
             {" "}
             {employers.credentials}
           </p>
@@ -50,7 +50,7 @@ const { employers } = getPageContent(locale);
       </div>
 
       <div
-        class="mt-8 flex flex-col gap-4 border-t border-primary/10 pt-8 sm:flex-row sm:items-center sm:justify-between"
+        class="mt-8 flex flex-col gap-4 border-t border-border pt-8 sm:flex-row sm:items-center sm:justify-between"
       >
         <p class="text-sm text-text-muted md:text-base">
           {employers.contactLabel}{" "}

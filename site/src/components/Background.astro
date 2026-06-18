@@ -11,7 +11,7 @@ const { locale } = Astro.props;
 const { background } = getPageContent(locale);
 ---
 
-<section id="background" class="section-pad border-b border-primary/10 bg-surface">
+<section id="background" class="section-pad border-b border-border bg-surface">
   <div class="container-page">
     <SectionHeading title={background.title} subtitle={background.subtitle} />
 
@@ -20,7 +20,7 @@ const { background } = getPageContent(locale);
         <h3 class="mb-6 text-sm font-semibold tracking-wide text-accent uppercase">
           {background.timelineLabel}
         </h3>
-        <ol class="relative space-y-0 border-l-2 border-primary/15 pl-6">
+        <ol class="relative space-y-0 border-l-2 border-border pl-6">
           {
             background.timeline.map((entry) => (
               <li
@@ -34,7 +34,7 @@ const { background } = getPageContent(locale);
                   aria-hidden="true"
                 />
                 <p class="text-sm font-semibold text-accent">{entry.period}</p>
-                <p class="mt-1 font-serif text-lg font-semibold text-primary">
+                <p class="mt-1 font-serif text-lg font-semibold text-text">
                   {entry.org}
                 </p>
                 <p class="mt-1 text-sm leading-relaxed text-text-muted md:text-base">
@@ -54,7 +54,7 @@ const { background } = getPageContent(locale);
           <ul class="space-y-3">
             {
               background.education.map((item) => (
-                <li class="rounded-lg border border-primary/10 bg-background px-4 py-3 text-sm leading-relaxed text-text md:text-base">
+                <li class="rounded-lg border border-border bg-background px-4 py-3 text-sm leading-relaxed text-text md:text-base">
                   {item}
                 </li>
               ))
@@ -67,7 +67,7 @@ const { background } = getPageContent(locale);
             {background.certificationsLabel}
           </h3>
           <p
-            class="rounded-lg border border-primary/10 bg-background px-4 py-3 text-sm leading-relaxed text-text md:text-base"
+            class="rounded-lg border border-border bg-background px-4 py-3 text-sm leading-relaxed text-text md:text-base"
           >
             {background.certifications}
           </p>

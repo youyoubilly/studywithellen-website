@@ -1,8 +1,8 @@
 /** Site-wide configuration — single source of truth for URLs, contact, SEO. */
 
-export const SITE_HOST = "hk1.youyoubilly.com";
-export const SITE_PORT = 8080;
-export const SITE_URL = `http://${SITE_HOST}:${SITE_PORT}`;
+export const SITE_HOST = "studywithellen.com";
+export const SITE_PORT = 443;
+export const SITE_URL = `https://${SITE_HOST}`;
 
 export const SITE_NAME = "Ellen Wang English Studio";
 
@@ -46,8 +46,8 @@ export function buildSiteUrl(path = ""): string {
   return `${SITE_URL}${normalized}`;
 }
 
-/** Self-hosted booking request form (see hk1/ellen-booking). */
-export const BOOKING_URL = buildSiteUrl("/book/");
+/** Self-hosted booking request form (same-origin path; proxied to ellen-booking). */
+export const BOOKING_URL = "/book/";
 /** @deprecated Use BOOKING_URL */
 export const CALENDAR_BOOKING_URL = BOOKING_URL;
 

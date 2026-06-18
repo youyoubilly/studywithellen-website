@@ -13,14 +13,14 @@ const barLabel = stickyBar.mobileLabel ?? stickyBar.label;
 ---
 
 <div
-  class="fixed inset-x-0 bottom-0 z-40 border-t border-primary/10 bg-background/95 px-3 pt-3 backdrop-blur-md md:hidden"
+  class="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 px-3 pt-3 backdrop-blur-md md:hidden"
   style="padding-bottom: max(0.75rem, env(safe-area-inset-bottom));"
   role="navigation"
   aria-label={stickyBar.ariaLabel}
 >
   <a
     href={NAV_LINKS.consultation}
-    class="flex min-h-[48px] w-full items-center justify-center rounded-full bg-accent px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-accent/25 transition-colors hover:bg-accent-hover active:scale-[0.99] sm:px-6"
+    class="flex min-h-[48px] w-full items-center justify-center rounded-full bg-primary px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/20 transition-colors hover:bg-primary-light active:scale-[0.99] sm:px-6"
   >
     <span class="sm:hidden">{barLabel}</span>
     <span class="hidden sm:inline">{stickyBar.label}</span>

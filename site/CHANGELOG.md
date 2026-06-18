@@ -2,6 +2,19 @@
 
 All notable changes to the Ellen Wang English Studio website.
 
+## [1.8.1] — 2026-06-19 — Booking link & submit fixes
+
+### Fixed
+
+- Consultation “提交预约申请” linked to dead `hk1:8080` URL — now same-origin `/book/`
+- Booking form purpose pills sync via hidden input; submit validates contact + slots client-side
+- HTML form POST errors redirect back to `/book/` with banner instead of raw JSON
+- `SITE_URL` / Astro `site` set to `https://studywithellen.com`
+
+### Changed
+
+- Design token polish across sections (accent headings, border tokens, tap targets)
+
 ## [1.8.0] — 2026-06-19 — Booking UX & timezone
 
 ### Added

@@ -14,9 +14,9 @@ import {
 
 describe("site config", () => {
   it("exports correct public URL", () => {
-    expect(SITE_HOST).toBe("hk1.youyoubilly.com");
-    expect(SITE_PORT).toBe(8080);
-    expect(SITE_URL).toBe("http://hk1.youyoubilly.com:8080");
+    expect(SITE_HOST).toBe("studywithellen.com");
+    expect(SITE_PORT).toBe(443);
+    expect(SITE_URL).toBe("https://studywithellen.com");
   });
 
   it("exports valid contact info", () => {
@@ -26,7 +26,7 @@ describe("site config", () => {
   });
 
   it("exports self-hosted booking URL", () => {
-    expect(BOOKING_URL).toBe(`${SITE_URL}/book/`);
+    expect(BOOKING_URL).toBe("/book/");
   });
 
   it("exports SEO metadata", () => {

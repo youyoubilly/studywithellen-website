@@ -13,7 +13,7 @@ const { locale } = Astro.props;
 const { services, images } = getPageContent(locale);
 ---
 
-<section id="services" class="section-pad border-b border-primary/10 bg-surface">
+<section id="services" class="section-pad border-b border-border bg-surface">
   <div class="container-page">
     <SectionHeading title={services.title} subtitle={services.subtitle} />
 
@@ -29,7 +29,7 @@ const { services, images } = getPageContent(locale);
                 "relative flex flex-col overflow-hidden rounded-2xl border transition-shadow duration-200",
                 service.featured
                   ? "border-accent/35 bg-background shadow-[var(--shadow-card-hover)] ring-1 ring-accent/25 xl:-translate-y-0.5"
-                  : "card-base card-hover border-primary/10 bg-background",
+                  : "card-base card-hover bg-background",
               ]}
             >
               {service.featured && service.badge && (
@@ -55,14 +55,14 @@ const { services, images } = getPageContent(locale);
                       "flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-serif text-lg font-semibold",
                       service.featured
                         ? "bg-accent text-white"
-                        : "bg-primary/10 text-primary",
+                        : "bg-accent/12 text-accent",
                     ]}
                     aria-hidden="true"
                   >
                     {index + 1}
                   </span>
                   <div>
-                    <h3 class="font-serif text-xl font-semibold text-primary">
+                    <h3 class="font-serif text-xl font-semibold text-text">
                       {service.title}
                     </h3>
                     {service.subtitle && (
@@ -74,7 +74,7 @@ const { services, images } = getPageContent(locale);
                 </div>
 
                 {service.format && (
-                  <p class="mb-4 text-sm font-medium text-primary/80">
+                  <p class="mb-4 text-sm font-medium text-text-muted">
                     {service.format}
                   </p>
                 )}
@@ -90,7 +90,7 @@ const { services, images } = getPageContent(locale);
                   ))}
                 </ul>
 
-                <p class="mt-auto border-t border-primary/10 pt-4 text-sm text-text-muted">
+                <p class="mt-auto border-t border-border pt-4 text-sm text-text-muted">
                   <span class="font-medium text-text">{services.suitableLabel}</span>
                   {service.suitable}
                 </p>
